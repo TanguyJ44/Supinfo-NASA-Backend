@@ -21,8 +21,7 @@ exports.login = (req, res) => {
         .then((user) => {
             if (user != null && user.password == req.body.password) {
                 const token = jwt.sign({
-                    id: user.id,
-                    grade: user.grade
+                    id: user.id
                 }, utils.TOKEN_SECRET, {
                     expiresIn: '600s'
                 });
