@@ -7,6 +7,6 @@ module.exports = app => {
     app.post("/user", CREATE.create);
     app.get("/user", READ.getAll);
     app.get("/user/:id", READ.getOne);
-    app.put("/user", UPDATE.update);
+    app.put("/user/:id", UPDATE.update);
     app.delete("/user", DELETE.delete);
 };
