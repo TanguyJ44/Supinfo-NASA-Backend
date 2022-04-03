@@ -13,7 +13,7 @@ exports.create = (req, res) => {
         });
     }
 
-    let newUser = new db.userModel({
+    const newUser = new db.userModel({
         email: req.body.email,
         pseudo: req.body.pseudo,
         password: req.body.password,

@@ -71,6 +71,8 @@ app.use(function (req, res, next) {
 
 require("./routes/auth.routes.js")(app);
 require("./routes/user.routes.js")(app);
+require("./routes/rover.routes.js")(app);
+require("./routes/mission.routes.js")(app);
 
 app.listen(3000, () => {
     console.log("Server is running !");
