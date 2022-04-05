@@ -52,10 +52,14 @@ const missionSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    rover: {
+    rover: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Rover"
-    }
+    }],
+    author: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    },
 });
 
 const userModel = mongoose.model("users", userSchema);

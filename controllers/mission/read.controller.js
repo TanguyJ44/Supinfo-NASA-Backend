@@ -1,5 +1,5 @@
 /* 
- * READ ROVER 
+ * READ MISSION 
  */
 
 const db = require("../../utils/database.js");
@@ -11,25 +11,28 @@ exports.getAll = (req, res) => {
         limit = req.query.limit;
     }
 
-    db.roverModel.find({
+    db.missionModel.find({
             name: req.query.name ? req.query.name : {
                 $exists: true
             },
-            construction_date: req.query.construction_date ? req.query.construction_date : {
+            start_date: req.query.start_date ? req.query.start_date : {
+                $exists: true
+            },
+            country: req.query.country ? req.query.country : {
                 $exists: true
             }
         })
         .limit(limit)
         .exec()
-        .then(rovers => {
+        .then(missions => {
             res.status(200).json({
                 "status": "success",
-                "rovers": rovers,
+                "missions": missions,
             });
         })
         .catch(err => {
             res.status(500).json({
-                message: "Une erreur est survenue lors de la récupération des rovers !",
+                message: "Une erreur est survenue lors de la récupération des missions !",
                 error: err
             });
         });
@@ -44,26 +47,26 @@ exports.getOne = (req, res) => {
         });
     }
 
-    db.roverModel.findOne({
+    db.missionModel.findOne({
             _id: req.params.id
         })
-        .then(rover => {
-            if (!rover) {
+        .then(mission => {
+            if (!mission) {
                 res.status(404).json({
                     "status": "error",
-                    "detail": "Rover introuvable !",
+                    "detail": "Mission introuvable !",
                 });
             } else {
                 res.status(200).json({
                     "status": "success",
-                    "rover": rover,
+                    "mission": mission,
                 });
             }
         })
         .catch(() => {
             res.status(500).json({
                 "status": "error",
-                "detail": "Une erreur est survenue lors de la récupération du rover !",
+                "detail": "Une erreur est survenue lors de la récupération de la mission !",
             });
         });
 
