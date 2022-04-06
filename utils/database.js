@@ -52,7 +52,7 @@ const missionSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    rover: [{
+    rovers: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: "Rover"
     }],

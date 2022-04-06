@@ -13,12 +13,27 @@ exports.create = (req, res) => {
         });
     }
 
+    const rovers = req.body.rover;
+
+    rovers.forEach(rover => {
+        db.missionModel.countDocuments({
+            rovers: rover._id
+        }, function (err, count) {
+            if (count > 0) {
+                return res.status(400).json({
+                    "status": "error",
+                    "detail": "Un ou plusieurs rovers sont déjà affectés à une mission !",
+                });
+            }
+        });
+    });
+
     const newMission = new db.missionModel({
         name: req.body.name,
         country: req.body.country,
         start_date: req.body.start_date,
         end_date: req.body.end_date,
-        rover: req.body.rover,
+        rovers: req.body.rovers,
         author: req.userId
     });
 
@@ -44,7 +59,8 @@ function checkBodyParams(bodyParam) {
     if (!bodyParam.country) return false;
     if (!bodyParam.start_date) return false;
     if (!bodyParam.end_date) return false;
-    if (!bodyParam.rover) return false;
+    if (!bodyParam.rovers) return false;
+    if (Array.isArray(bodyParam.rovers) === false) return false;
 
     return true;
 }
