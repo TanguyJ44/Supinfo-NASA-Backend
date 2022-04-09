@@ -17,7 +17,7 @@ exports.create = (req, res) => {
         email: req.body.email,
         pseudo: req.body.pseudo,
         password: req.body.password,
-        isAdmin: req.body.isAdmin,
+        isAdmin: false,
     });
 
     newUser.save(function (err, user) {
@@ -41,7 +41,6 @@ function checkBodyParams(bodyParam) {
     if (!bodyParam.email) return false;
     if (!bodyParam.pseudo) return false;
     if (!bodyParam.password) return false;
-    if (typeof bodyParam.isAdmin !== "boolean") return false;
 
     return true;
 }

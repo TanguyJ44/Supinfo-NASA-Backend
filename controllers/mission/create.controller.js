@@ -13,20 +13,22 @@ exports.create = (req, res) => {
         });
     }
 
-    const rovers = req.body.rover;
+    const rovers = req.body.rovers;
 
-    rovers.forEach(rover => {
-        db.missionModel.countDocuments({
-            rovers: rover._id
-        }, function (err, count) {
-            if (count > 0) {
-                return res.status(400).json({
-                    "status": "error",
-                    "detail": "Un ou plusieurs rovers sont déjà affectés à une mission !",
-                });
-            }
+    if (rovers.length !== 0) {
+        rovers.forEach(rover => {
+            db.missionModel.countDocuments({
+                rovers: rover._id
+            }, function (err, count) {
+                if (count > 0) {
+                    return res.status(400).json({
+                        "status": "error",
+                        "detail": "Un ou plusieurs rovers sont déjà affectés à une mission !",
+                    });
+                }
+            });
         });
-    });
+    }
 
     const newMission = new db.missionModel({
         name: req.body.name,

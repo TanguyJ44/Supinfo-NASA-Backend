@@ -15,9 +15,9 @@ exports.create = (req, res) => {
 
     const newRover = new db.roverModel({
         name: req.body.name,
-        launch_date: req.body.launch_date != undefined ? req.body.launch_date : null,
+        launch_date: req.body.launch_date != undefined ? req.body.launch_date : new Date(),
         construction_date: req.body.construction_date,
-        constructor: req.body.constructor,
+        manufacturer: req.body.manufacturer,
         image: req.body.image,
     });
 
@@ -41,7 +41,7 @@ exports.create = (req, res) => {
 function checkBodyParams(bodyParam) {
     if (!bodyParam.name) return false;
     if (!bodyParam.construction_date) return false;
-    if (!bodyParam.constructor) return false;
+    if (!bodyParam.manufacturer) return false;
     if (!bodyParam.image) return false;
 
     return true;

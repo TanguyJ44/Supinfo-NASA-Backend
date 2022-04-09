@@ -34,7 +34,7 @@ const roverSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    constructor: String,
+    manufacturer: String,
     image: String,
 });
 

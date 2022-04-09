@@ -13,10 +13,6 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use(function (req, res, next) {
-    if (req.method == "GET") {
-        req.bypass = true;
-        return next();
-    }
     switch (req.path) {
         case "/auth/login":
             req.bypass = true;
@@ -41,7 +37,8 @@ app.use(function (req, res, next) {
 
     if (!req.headers.authorization) {
         return res.status(401).send({
-            message: "Vous n'êtes pas autorisé !"
+            "status": "error",
+            "message": "Vous n'êtes pas autorisé !"
         });
     }
 
@@ -50,11 +47,17 @@ app.use(function (req, res, next) {
     if (token) {
         jwt.verify(token, utils.TOKEN_SECRET, (err, decoded) => {
             if (err) {
-                res.sendStatus(403);
+                res.status(401).send({
+                    "status": "error",
+                    "message": "Token invalid ou autorisations insuffisantes !"
+                });
             } else {
                 db.userModel.findById(decoded.id, (err, user) => {
                     if (err) {
-                        res.sendStatus(403);
+                        res.status(401).send({
+                            "status": "error",
+                            "message": "Token invalid ou autorisations insuffisantes !"
+                        });
                     } else {
                         req.authToken = token;
                         req.userId = user._id;
@@ -65,7 +68,10 @@ app.use(function (req, res, next) {
             }
         });
     } else {
-        res.sendStatus(403);
+        res.status(401).send({
+            "status": "error",
+            "message": "Token invalid ou autorisations insuffisantes !"
+        });
     }
 });
 

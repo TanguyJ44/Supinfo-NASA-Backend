@@ -6,16 +6,20 @@ const db = require("../../utils/database.js");
 
 exports.getAll = (req, res) => {
     let limit = 10;
+    let date = null;
 
     if (req.query.limit) {
         limit = req.query.limit;
+    }
+    if (req.query.date) {
+        date = new Date(req.query.date);
     }
 
     db.missionModel.find({
             name: req.query.name ? req.query.name : {
                 $exists: true
             },
-            start_date: req.query.start_date ? req.query.start_date : {
+            start_date: date ? date : {
                 $exists: true
             },
             country: req.query.country ? req.query.country : {

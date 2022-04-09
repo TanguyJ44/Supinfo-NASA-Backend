@@ -6,16 +6,20 @@ const db = require("../../utils/database.js");
 
 exports.getAll = (req, res) => {
     let limit = 10;
+    let date = null;
 
     if (req.query.limit) {
         limit = req.query.limit;
+    }
+    if (req.query.date) {
+        date = new Date(req.query.date);
     }
 
     db.roverModel.find({
             name: req.query.name ? req.query.name : {
                 $exists: true
             },
-            construction_date: req.query.construction_date ? req.query.construction_date : {
+            construction_date: date ? date : {
                 $exists: true
             }
         })
