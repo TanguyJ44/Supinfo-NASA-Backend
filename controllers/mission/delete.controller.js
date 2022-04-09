@@ -16,11 +16,13 @@ exports.delete = (req, res) => {
                     "detail": "Mission introuvable !",
                 });
             } else {
-                if (req.userIsAdmin == false || mission.author != req.userId) {
-                    return res.status(403).json({
-                        "status": "error",
-                        "detail": "Seul un administrateur ou l'auteur peut supprimer une mission !"
-                    });
+                if (req.userIsAdmin == false) {
+                    if (String(mission.author) != String(req.userId)) {
+                        return res.status(403).json({
+                            "status": "error",
+                            "detail": "Seul un administrateur ou l'auteur peut supprimer une mission !"
+                        });
+                    }
                 }
 
                 db.missionModel.findByIdAndRemove(req.params.id, (err) => {
