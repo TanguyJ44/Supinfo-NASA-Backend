@@ -3,10 +3,13 @@
  */
 
 const db = require("../../utils/database.js");
+const Joi = require("@hapi/joi");
 
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
 
-    if (!checkBodyParams(req.body)) {
+    const validator = await checkBodyParams(req.body);
+
+    if (!validator) {
         return res.status(400).json({
             "status": "error",
             "detail": "Un ou plusieurs paramètres de votre requête sont incorrects ou manquants !",
@@ -68,12 +71,22 @@ exports.create = (req, res) => {
 };
 
 function checkBodyParams(bodyParam) {
-    if (!bodyParam.name) return false;
-    if (!bodyParam.country) return false;
-    if (!bodyParam.start_date) return false;
-    if (!bodyParam.end_date) return false;
-    if (!bodyParam.rovers) return false;
-    if (Array.isArray(bodyParam.rovers) === false) return false;
+    return new Promise(resolve => {
+        const schema = Joi.object().keys({
+            name: Joi.string().alphanum().min(3).max(30).required(),
+            country: Joi.string().alphanum().min(3).max(30).required(),
+            start_date: Joi.string(),
+            end_date: Joi.string().required(),
+            rovers: Joi.array().items(Joi.string()).required()
+        });
 
-    return true;
+        const result = Joi.validate(bodyParam, schema);
+
+        result.then(() => {
+            resolve(true);
+        }).catch(() => {
+            resolve(false);
+        });
+    });
+
 }

@@ -6,14 +6,7 @@ const db = require("../../utils/database.js");
 const Joi = require("@hapi/joi");
 
 exports.create = async (req, res) => {
-
-    /*if (!checkBodyParams(req.body)) {
-        return res.status(400).json({
-            "status": "error",
-            "detail": "Un ou plusieurs paramètres de votre requête sont incorrects ou manquants !",
-        });
-    }*/
-
+    
     const validator = await checkBodyParams(req.body);
 
     if (!validator) {
@@ -65,9 +58,3 @@ function checkBodyParams(bodyParam) {
     });
 
 }
-
-/*if (!bodyParam.email) return false;
-    if (!bodyParam.pseudo) return false;
-    if (!bodyParam.password) return false;
-
-    return true;*/

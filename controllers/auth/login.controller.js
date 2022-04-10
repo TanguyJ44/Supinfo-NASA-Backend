@@ -2,13 +2,16 @@
  * AUTH LOGIN
  */
 
-const jwt = require("jsonwebtoken");
 const db = require("../../utils/database.js");
 const utils = require("../../utils/utils.js");
+const jwt = require("jsonwebtoken");
+const Joi = require("@hapi/joi");
 
-exports.login = (req, res) => {
+exports.login = async (req, res) => {
 
-    if (!checkBodyParams(req.body)) {
+    const validator = await checkBodyParams(req.body);
+
+    if (!validator) {
         return res.status(400).json({
             "status": "error",
             "detail": "Un ou plusieurs paramètres de votre requête sont incorrects ou manquants !",
@@ -47,8 +50,19 @@ exports.login = (req, res) => {
 };
 
 function checkBodyParams(bodyParam) {
-    if (!bodyParam.email) return false;
-    if (!bodyParam.password) return false;
+    return new Promise(resolve => {
+        const schema = Joi.object().keys({
+            email: Joi.string().email().min(3).max(30).required(),
+            password: Joi.string().alphanum().min(3).max(30).required()
+        });
 
-    return true;
+        const result = Joi.validate(bodyParam, schema);
+
+        result.then(() => {
+            resolve(true);
+        }).catch(() => {
+            resolve(false);
+        });
+    });
+
 }
