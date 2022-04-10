@@ -33,8 +33,8 @@ exports.getAll = (req, res) => {
         })
         .catch(err => {
             res.status(500).json({
-                message: "Une erreur est survenue lors de la récupération des rovers !",
-                error: err
+                "message": "Une erreur est survenue lors de la récupération des rovers !",
+                "error": err
             });
         });
 };

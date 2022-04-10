@@ -23,7 +23,10 @@ exports.update = (req, res) => {
         new: true
     }, (err, user) => {
         if (err) {
-            return res.status(500).send(err);
+            return res.status(500).send({
+                "status": "error",
+                "message": "Une erreur est survenue lors de la mise à jour de l'utilisateur !",
+            });
         }
         user.password = undefined;
         return res.status(200).json({

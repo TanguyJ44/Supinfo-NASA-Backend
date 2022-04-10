@@ -27,7 +27,10 @@ exports.delete = (req, res) => {
 
                 db.missionModel.findByIdAndRemove(req.params.id, (err) => {
                     if (err) {
-                        return res.status(500).send(err);
+                        return res.status(500).json({
+                            "status": "error",
+                            "detail": "Erreur lors de la suppression de la mission !"
+                        });
                     }
                     return res.status(200).json({
                         "status": "success",

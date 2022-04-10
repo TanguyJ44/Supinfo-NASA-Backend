@@ -9,7 +9,10 @@ exports.update = (req, res) => {
         new: true
     }, (err, mission) => {
         if (err) {
-            return res.status(500).send(err);
+            return res.status(500).json({
+                "status": "error",
+                "detail": "Une erreur est survenue lors de la mise à jour de la mission !",
+            });
         }
         return res.status(200).json({
             "status": "success",

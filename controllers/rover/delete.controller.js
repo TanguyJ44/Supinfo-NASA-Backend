@@ -15,7 +15,10 @@ exports.delete = (req, res) => {
 
     db.roverModel.findByIdAndRemove(req.params.id, (err) => {
         if (err) {
-            return res.status(500).send(err);
+            return res.status(500).json({
+                "status": "error",
+                "detail": "Erreur lors de la suppression du rover !"
+            });
         }
         return res.status(200).json({
             "status": "success",
