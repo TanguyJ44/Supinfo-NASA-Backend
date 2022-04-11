@@ -49,14 +49,14 @@ app.use(function (req, res, next) {
             if (err) {
                 res.status(401).send({
                     "status": "error",
-                    "message": "Token invalid ou autorisations insuffisantes !"
+                    "message": "Token invalide ou autorisations insuffisantes !"
                 });
             } else {
                 db.userModel.findById(decoded.id, (err, user) => {
                     if (err) {
                         res.status(401).send({
                             "status": "error",
-                            "message": "Token invalid ou autorisations insuffisantes !"
+                            "message": "Token invalide ou autorisations insuffisantes !"
                         });
                     } else {
                         req.authToken = token;
@@ -70,7 +70,7 @@ app.use(function (req, res, next) {
     } else {
         res.status(401).send({
             "status": "error",
-            "message": "Token invalid ou autorisations insuffisantes !"
+            "message": "Token invalide ou autorisations insuffisantes !"
         });
     }
 });

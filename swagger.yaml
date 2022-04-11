@@ -1,0 +1,306 @@
+swagger: "2.0"
+info:
+  description: "3MERN API NASA"
+  version: "1.0.0"
+  title: "NASA - 3MERN"
+host: "petstore.swagger.io"
+tags:
+- name: "auth"
+  description: "Authentification des utilisateurs"
+- name: "user"
+  description: "Gestion des utilisateurs"
+- name: "rover"
+  description: "Gestion des rovers"
+- name: "mission"
+  description: "Gestion des missions"
+schemes:
+- "http"
+paths:
+  /login:
+    post:
+      tags:
+      - "auth"
+      summary: "Connexion"
+      description: "Connexion d'un utilisateur"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Auth"
+      responses:
+        "405":
+          description: "Invalid input"
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Créer un utilisateur"
+      description: "Création d'un utilisateur"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
+    get:
+      tags:
+      - "user"
+      summary: "Récupérer les utilisateurs"
+      description: "Récupérer un ou tous les utilisateurs"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "header"
+        required: false
+        type: "integer"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid status value"
+    put:
+      tags:
+      - "user"
+      summary: "Modifier un utilisateur"
+      description: "Modifier d'un utilisateur"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "user"
+      summary: "Supprimer un utilisateur"
+      description: "Suppression d'un utilisateur"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "header"
+        required: true
+        type: "integer"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+  /rover:
+    post:
+      tags:
+      - "rover"
+      summary: "Créer un rover"
+      description: "Création d'un rover"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Rover"
+      responses:
+        "405":
+          description: "Invalid input"
+    get:
+      tags:
+      - "rover"
+      summary: "Récupérer les rovers"
+      description: "Récupérer un ou tous les rovers"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "header"
+        required: false
+        type: "integer"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid status value"
+    put:
+      tags:
+      - "rover"
+      summary: "Modifier un rover"
+      description: "Modifier d'un rover"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Rover"
+      responses:
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "rover"
+      summary: "Supprimer un rover"
+      description: "Suppression d'un rover"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "header"
+        required: true
+        type: "integer"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+  /mission:
+    post:
+      tags:
+      - "mission"
+      summary: "Créer une mission"
+      description: "Création d'une mission"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Mission"
+      responses:
+        "405":
+          description: "Invalid input"
+    get:
+      tags:
+      - "mission"
+      summary: "Récupérer les missions"
+      description: "Récupérer une ou toutes les missions"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "header"
+        required: false
+        type: "integer"
+      responses:
+        "200":
+          description: "successful operation"
+        "400":
+          description: "Invalid status value"
+    put:
+      tags:
+      - "mission"
+      summary: "Modifier une missions"
+      description: "Modifier une missions"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: true
+        schema:
+          $ref: "#/definitions/Mission"
+      responses:
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "mission"
+      summary: "Supprimer une mission"
+      description: "Suppression d'une mission"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "header"
+        required: true
+        type: "integer"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+definitions:
+  Auth:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      password:
+        type: "string"
+    xml:
+      name: "User"
+  User:
+    type: "object"
+    properties:
+      email:
+        type: "string"
+      pseudo:
+        type: "string"
+      password:
+        type: "string"
+      isAdmin:
+        type: "boolean"
+        default: false
+    xml:
+      name: "User"
+  Rover:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      launch_date:
+        type: "string"
+        format: "date"
+      construction_date:
+        type: "string"
+        format: "date"
+      manufacturer:
+        type: "string"
+      image:
+        type: "string"
+    xml:
+      name: "Rover"
+  Mission:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+      country:
+        type: "string"
+      start_date:
+        type: "string"
+        format: "date"
+      end_date:
+        type: "string"
+        format: "date"
+      rovers:
+        type: "array"
+        items:
+          type: "string"
+      author:
+        type: "string"
+    xml:
+      name: "Mission"
