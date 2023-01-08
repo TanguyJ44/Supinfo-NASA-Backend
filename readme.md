@@ -26,10 +26,3 @@ Il est aussi possible d'utiliser un daemon d'exécution :
 ```sh
 nodemon index.js
 ```
-
-## Accéder à la base de données
-
-Vous pouvez vous connecter à la base de données du projet depuis https://cloud.mongodb.com/
-
-Identifiant : `tanguy.joseph@supinfo.com`
-Mot de passe : `!Mern2022`
